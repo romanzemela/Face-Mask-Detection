@@ -67,9 +67,24 @@ def wykryj_i_oszacuj_maske(klatka, faceNet, maskNet):
 		# sprawdzamy, z jakim prawdopodobienstwem na twarzy znajduje sie maska
 		twarze = np.array(twarze, dtype="float32")
 		prawdopodobienstwo_maski = maskNet.predict(twarze, batch_size=32)
+	
+	pixels.setPixelColor(i, pixels.Color(0, 0, 0)); #Wygaszenie diody gdy nie ma twarzy w kadrze
+	LED.show();
 
 	# zwracamy krotke (twarz, lokacja)
 	return (locs, prawdopodobienstwo_maski)
+	
+#-----------------------------------------------
+#Tutaj znajduje sie kod zwiazany z dioda, prezentujaca wykrycie maseczki
+#LED variables
+#Przygotowanie diod
+def LED_PIN D1
+def PWR_pin D2
+def LED_COUNT 1
+#Funkcja z biblioteki <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel = LED(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+
+#-----------------------------------------------------
 
 # Przygotowujemy zmienne i podajemy lokalizacje modeli do wykrywania twarzy i masek
 ap = argparse.ArgumentParser()
@@ -126,10 +141,14 @@ while True:
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 		cv2.rectangle(klatka, (startX, startY), (endX, endY), color, 2)
 
-		# Tutaj reagujemy na makse lub jej brak
+		# Tutaj reagujemy na maske lub jej brak
 		if maska < bezMaski:
-			path = os.path.abspath("Alarm.wav")
-			playsound(path)
+			pixels.setPixelColor(i, pixels.Color(0, 150, 0)); #Zapalenie diody na czerwono
+		else 
+		    pixels.setPixelColor(i, pixels.Color(150, 0, 0)); #Zapalenie diody na zielono
+		    
+		LED.show();
+    
 
 	# wyswietlenie klatki
 	cv2.imshow("klatka", klatka)
