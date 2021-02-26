@@ -12,8 +12,10 @@ import argparse
 import imutils
 import time
 import cv2
-import os
 import RPi.GPIO as GPIO #piny do diod led
+import jetson.inference
+import jetson.utils #biblioteka do obsługi kamery
+import os
 from plyer import notification
 
 def wykryj_i_oszacuj_maske(klatka, faceNet, maskNet):
@@ -84,8 +86,6 @@ def LED_COUNT 1
 #Funkcja z biblioteki <Adafruit_NeoPixel.h>
 Adafruit_NeoPixel = LED(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
-#-----------------------------------------------------
-
 # Przygotowujemy zmienne i podajemy lokalizacje modeli do wykrywania twarzy i masek
 ap = argparse.ArgumentParser()
 ap.add_argument("-f", "--twarz", type=str,
@@ -109,10 +109,15 @@ faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 print("[INFO] ladowanie modelu do wykrywania maseczek...")
 maskNet = load_model(args["model"])
 
+
+#-----------------------------------------------------
 # inicjalizowanie strumienia z kamery
 print("[INFO] startowanie przesylania obrazu...")
-vs = VideoStream(src=0).start()
+camera = jetson.utils.gstCamera(1280, 720, "0")
+vs = camera.CaptureRGBA(zeroCopy=1)
 time.sleep(2.0)
+
+#-----------------------------------------------------
 
 # iterowanie po klatkach z strumienia z kamery
 while True:
