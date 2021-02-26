@@ -68,8 +68,8 @@ def wykryj_i_oszacuj_maske(klatka, faceNet, maskNet):
 		twarze = np.array(twarze, dtype="float32")
 		prawdopodobienstwo_maski = maskNet.predict(twarze, batch_size=32)
 	
-	LED.setPixelColor(i, LED.Color(0, 0, 0)); #Wygaszenie diody gdy nie ma twarzy w kadrze
-	LED.show();
+	Adafruit_NeoPixel.setPixelColor(i, LED.Color(0, 0, 0)); #Wygaszenie diody gdy nie ma twarzy w kadrze
+	Adafruit_NeoPixel.show();
 
 	# zwracamy krotke (twarz, lokacja)
 	return (locs, prawdopodobienstwo_maski)
@@ -143,11 +143,11 @@ while True:
 
 		# Tutaj reagujemy na maske lub jej brak
 		if maska < bezMaski:
-			LED.setPixelColor(i, pixels.Color(0, 150, 0)); #Zapalenie diody na czerwono
+			Adafruit_NeoPixel.setPixelColor(i, pixels.Color(0, 150, 0)); #Zapalenie diody na czerwono
 		else 
-		    LED.setPixelColor(i, pixels.Color(150, 0, 0)); #Zapalenie diody na zielono
+		    Adafruit_NeoPixel.setPixelColor(i, pixels.Color(150, 0, 0)); #Zapalenie diody na zielono
 		    
-		LED.show();
+		Adafruit_NeoPixel.show();
     
 
 	# wyswietlenie klatki
