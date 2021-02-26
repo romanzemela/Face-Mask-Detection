@@ -68,7 +68,7 @@ def wykryj_i_oszacuj_maske(klatka, faceNet, maskNet):
 		twarze = np.array(twarze, dtype="float32")
 		prawdopodobienstwo_maski = maskNet.predict(twarze, batch_size=32)
 	
-	pixels.setPixelColor(i, pixels.Color(0, 0, 0)); #Wygaszenie diody gdy nie ma twarzy w kadrze
+	LED.setPixelColor(i, LED.Color(0, 0, 0)); #Wygaszenie diody gdy nie ma twarzy w kadrze
 	LED.show();
 
 	# zwracamy krotke (twarz, lokacja)
@@ -143,9 +143,9 @@ while True:
 
 		# Tutaj reagujemy na maske lub jej brak
 		if maska < bezMaski:
-			pixels.setPixelColor(i, pixels.Color(0, 150, 0)); #Zapalenie diody na czerwono
+			LED.setPixelColor(i, pixels.Color(0, 150, 0)); #Zapalenie diody na czerwono
 		else 
-		    pixels.setPixelColor(i, pixels.Color(150, 0, 0)); #Zapalenie diody na zielono
+		    LED.setPixelColor(i, pixels.Color(150, 0, 0)); #Zapalenie diody na zielono
 		    
 		LED.show();
     
