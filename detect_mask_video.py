@@ -109,14 +109,12 @@ faceNet = cv2.dnn.readNet(prototxtPath, weightsPath)
 print("[INFO] ladowanie modelu do wykrywania maseczek...")
 maskNet = load_model(args["model"])
 
-
 #-----------------------------------------------------
 # inicjalizowanie strumienia z kamery
 print("[INFO] startowanie przesylania obrazu...")
 camera = jetson.utils.gstCamera(1280, 720, "0")
 vs = camera.CaptureRGBA(zeroCopy=1)
 time.sleep(2.0)
-
 #-----------------------------------------------------
 
 # iterowanie po klatkach z strumienia z kamery
